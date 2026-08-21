@@ -398,13 +398,11 @@ from app.providers.exceptions import ProviderError, ProviderErrorKind
 
 class GeminiProvider(LLMProvider):
     name = "gemini"
-    capabilities = frozenset(
-        {
-            ProviderCapability.CHAT,
-            ProviderCapability.STRUCTURED,
-            ProviderCapability.EMBEDDINGS,
-        }
-    )
+    capabilities = frozenset({
+        ProviderCapability.CHAT,
+        ProviderCapability.STRUCTURED,
+        ProviderCapability.EMBEDDINGS,
+    })
 
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
@@ -584,6 +582,7 @@ The adapter lazy-loads the SDK client. `self._client` begins as `None`; `_get_cl
 ```python
 if self._client is None:
     from google import genai
+
     self._client = genai.Client(api_key=self.api_key)
 ```
 
@@ -624,13 +623,11 @@ from app.providers.exceptions import ProviderError, ProviderErrorKind
 
 class OpenAIProvider(LLMProvider):
     name = "openai"
-    capabilities = frozenset(
-        {
-            ProviderCapability.CHAT,
-            ProviderCapability.STRUCTURED,
-            ProviderCapability.EMBEDDINGS,
-        }
-    )
+    capabilities = frozenset({
+        ProviderCapability.CHAT,
+        ProviderCapability.STRUCTURED,
+        ProviderCapability.EMBEDDINGS,
+    })
 
     def __init__(self, api_key: str, timeout_seconds: float) -> None:
         self.api_key = api_key
@@ -819,12 +816,10 @@ class ProviderRegistry:
 @lru_cache
 def get_provider_registry() -> ProviderRegistry:
     settings = get_settings()
-    return ProviderRegistry(
-        [
-            GeminiProvider(settings.gemini_api_key),
-            OpenAIProvider(settings.openai_api_key, settings.gateway_timeout_seconds),
-        ]
-    )
+    return ProviderRegistry([
+        GeminiProvider(settings.gemini_api_key),
+        OpenAIProvider(settings.openai_api_key, settings.gateway_timeout_seconds),
+    ])
 ```
 
 The registry is a lookup table from provider name to adapter object.
@@ -1400,6 +1395,7 @@ Transient failures, rate limits, authentication/configuration failures, and unkn
 async def operation(target: RouteTarget) -> ProviderChatResult:
     provider = self.registry.get(target.provider)
     return await provider.chat(...)
+
 
 execution = await self._execute(
     ...,
@@ -2397,13 +2393,11 @@ from app.providers.base import (
 
 
 class FakeProvider(LLMProvider):
-    capabilities = frozenset(
-        {
-            ProviderCapability.CHAT,
-            ProviderCapability.STRUCTURED,
-            ProviderCapability.EMBEDDINGS,
-        }
-    )
+    capabilities = frozenset({
+        ProviderCapability.CHAT,
+        ProviderCapability.STRUCTURED,
+        ProviderCapability.EMBEDDINGS,
+    })
 
     def __init__(
         self, name: str, outcomes: list[object] | None = None, configured: bool = True
@@ -2459,7 +2453,7 @@ class FakeProvider(LLMProvider):
 The `outcomes` deque lets a test script provider behavior.
 
 ```python
-outcomes=[
+outcomes = [
     transient_error,
     transient_error,
     successful_result,
