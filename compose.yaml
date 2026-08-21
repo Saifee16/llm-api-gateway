@@ -1,0 +1,17 @@
+services:
+  gateway:
+    build:
+      context: .
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "127.0.0.1:${HOST_PORT:-8000}:8000"
+    volumes:
+      - gateway_data:/app/data
+    environment:
+      DATABASE_URL: sqlite:////app/data/gateway.db
+    restart: unless-stopped
+
+volumes:
+  gateway_data:

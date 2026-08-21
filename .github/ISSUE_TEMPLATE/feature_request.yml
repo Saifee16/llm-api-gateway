@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest a gateway improvement
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: provider-impact
+    attributes:
+      label: Provider abstraction impact
+      description: Explain whether this is provider-neutral or provider-specific.
