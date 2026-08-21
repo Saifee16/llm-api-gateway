@@ -398,11 +398,13 @@ from app.providers.exceptions import ProviderError, ProviderErrorKind
 
 class GeminiProvider(LLMProvider):
     name = "gemini"
-    capabilities = frozenset({
-        ProviderCapability.CHAT,
-        ProviderCapability.STRUCTURED,
-        ProviderCapability.EMBEDDINGS,
-    })
+    capabilities = frozenset(
+        {
+            ProviderCapability.CHAT,
+            ProviderCapability.STRUCTURED,
+            ProviderCapability.EMBEDDINGS,
+        }
+    )
 
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
@@ -623,11 +625,13 @@ from app.providers.exceptions import ProviderError, ProviderErrorKind
 
 class OpenAIProvider(LLMProvider):
     name = "openai"
-    capabilities = frozenset({
-        ProviderCapability.CHAT,
-        ProviderCapability.STRUCTURED,
-        ProviderCapability.EMBEDDINGS,
-    })
+    capabilities = frozenset(
+        {
+            ProviderCapability.CHAT,
+            ProviderCapability.STRUCTURED,
+            ProviderCapability.EMBEDDINGS,
+        }
+    )
 
     def __init__(self, api_key: str, timeout_seconds: float) -> None:
         self.api_key = api_key
@@ -816,10 +820,12 @@ class ProviderRegistry:
 @lru_cache
 def get_provider_registry() -> ProviderRegistry:
     settings = get_settings()
-    return ProviderRegistry([
-        GeminiProvider(settings.gemini_api_key),
-        OpenAIProvider(settings.openai_api_key, settings.gateway_timeout_seconds),
-    ])
+    return ProviderRegistry(
+        [
+            GeminiProvider(settings.gemini_api_key),
+            OpenAIProvider(settings.openai_api_key, settings.gateway_timeout_seconds),
+        ]
+    )
 ```
 
 The registry is a lookup table from provider name to adapter object.
@@ -2393,11 +2399,13 @@ from app.providers.base import (
 
 
 class FakeProvider(LLMProvider):
-    capabilities = frozenset({
-        ProviderCapability.CHAT,
-        ProviderCapability.STRUCTURED,
-        ProviderCapability.EMBEDDINGS,
-    })
+    capabilities = frozenset(
+        {
+            ProviderCapability.CHAT,
+            ProviderCapability.STRUCTURED,
+            ProviderCapability.EMBEDDINGS,
+        }
+    )
 
     def __init__(
         self, name: str, outcomes: list[object] | None = None, configured: bool = True
